@@ -1,7 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: api-python-inflight
+spec:
+  inFlightReq:
+    amount: 100
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-python
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-api-python-inflight@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
